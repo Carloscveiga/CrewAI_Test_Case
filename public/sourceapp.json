@@ -1,0 +1,608 @@
+{
+  "constants": {
+    "DEFAULT_MAX_LIFE": {
+      "type": "number",
+      "value": 100,
+      "purpose": "Default maximum life value for player"
+    },
+    "MAX_HISTORY": {
+      "type": "number",
+      "value": 50,
+      "purpose": "Maximum number of history states to keep in memory"
+    }
+  },
+  "shieldPresets": {
+    "none": {
+      "type": "object",
+      "charges": 0,
+      "dr": 0.0,
+      "life": 100,
+      "name": "No Shield",
+      "nameColor": "text-slate-200",
+      "barColor": "bg-slate-500",
+      "borderColor": "border-slate-400/50",
+      "purpose": "Preset configuration for no shield equipped"
+    },
+    "light": {
+      "type": "object",
+      "charges": 40,
+      "dr": 40.0,
+      "life": 100,
+      "name": "Light Shield",
+      "nameColor": "text-emerald-200",
+      "barColor": "bg-emerald-400",
+      "borderColor": "border-emerald-300/60",
+      "purpose": "Preset configuration for light shield (40 capacity, 40% DR)"
+    },
+    "medium": {
+      "type": "object",
+      "charges": 70,
+      "dr": 42.5,
+      "life": 100,
+      "name": "Medium Shield",
+      "nameColor": "text-cyan-200",
+      "barColor": "bg-cyan-400",
+      "borderColor": "border-cyan-300/60",
+      "purpose": "Preset configuration for medium shield (70 capacity, 42.5% DR)"
+    },
+    "heavy": {
+      "type": "object",
+      "charges": 80,
+      "dr": 52.5,
+      "life": 100,
+      "name": "Heavy Shield",
+      "nameColor": "text-fuchsia-200",
+      "barColor": "bg-fuchsia-400",
+      "borderColor": "border-fuchsia-300/60",
+      "purpose": "Preset configuration for heavy shield (80 capacity, 52.5% DR)"
+    },
+    "custom": {
+      "type": "object",
+      "charges": 80,
+      "dr": 50,
+      "life": 100,
+      "name": "Custom Shield",
+      "nameColor": "text-yellow-200",
+      "barColor": "bg-yellow-400",
+      "borderColor": "border-yellow-300/60",
+      "purpose": "Custom shield preset with user-defined values"
+    }
+  },
+  "healingItems": {
+    "shield": {
+      "type": "object",
+      "items": {
+        "Arc Powercell": {
+          "amount": 20,
+          "duration": 10,
+          "useTime": 3,
+          "color": "text-slate-200",
+          "purpose": "Shield healing item - 20 capacity over 10 seconds, 3 second use time"
+        },
+        "Shield Recharger": {
+          "amount": 40,
+          "duration": 10,
+          "useTime": 2,
+          "color": "text-emerald-200",
+          "purpose": "Shield healing item - 40 capacity over 10 seconds, 2 second use time"
+        },
+        "Surge Shield Recharger": {
+          "amount": 50,
+          "duration": 0,
+          "useTime": 5,
+          "color": "text-cyan-200",
+          "purpose": "Shield healing item - 50 instant capacity, 5 second use time"
+        },
+        "Custom": {
+          "amount": 0,
+          "duration": 0,
+          "useTime": 0,
+          "color": "text-white",
+          "purpose": "Custom shield healing configuration"
+        }
+      },
+      "purpose": "Collection of shield healing items with properties"
+    },
+    "life": {
+      "type": "object",
+      "items": {
+        "Fabric": {
+          "amount": 10,
+          "duration": 25,
+          "useTime": 1.5,
+          "color": "text-slate-200",
+          "purpose": "Life healing item - 10 HP over 25 seconds, 1.5 second use time"
+        },
+        "Bandage": {
+          "amount": 20,
+          "duration": 10,
+          "useTime": 1.5,
+          "color": "text-white",
+          "purpose": "Life healing item - 20 HP over 10 seconds, 1.5 second use time"
+        },
+        "Herbal Bandage": {
+          "amount": 35,
+          "duration": 10,
+          "useTime": 1.5,
+          "color": "text-emerald-200",
+          "purpose": "Life healing item - 35 HP over 10 seconds, 1.5 second use time"
+        },
+        "Sterilized Bandage": {
+          "amount": 50,
+          "duration": 10,
+          "useTime": 1.5,
+          "color": "text-cyan-200",
+          "purpose": "Life healing item - 50 HP over 10 seconds, 1.5 second use time"
+        },
+        "Vita Shot": {
+          "amount": 50,
+          "duration": 0,
+          "useTime": 4,
+          "color": "text-cyan-200",
+          "purpose": "Life healing item - 50 instant HP, 4 second use time"
+        },
+        "Vita Spray": {
+          "amount": 10,
+          "duration": 0,
+          "mode": "hold",
+          "useTime": 0,
+          "color": "text-fuchsia-200",
+          "purpose": "Life healing item - hold-to-use mode, 10 HP per second"
+        },
+        "Custom": {
+          "amount": 0,
+          "duration": 0,
+          "useTime": 0,
+          "color": "text-white",
+          "purpose": "Custom life healing configuration"
+        }
+      },
+      "purpose": "Collection of life healing items with properties"
+    }
+  },
+  "weapons": {
+    "type": "object",
+    "items": {
+      "Anvil": {
+        "damage": 40,
+        "hsm": 2.5,
+        "projectiles": 1,
+        "color": "text-emerald-200",
+        "purpose": "Weapon - 40 base damage, 2.5x headshot multiplier, 1 projectile"
+      },
+      "Arpeggio": {
+        "damage": 9.5,
+        "hsm": 2,
+        "projectiles": 3,
+        "color": "text-emerald-200",
+        "purpose": "Weapon - 9.5 base damage, 2x headshot multiplier, 3 projectiles"
+      },
+      "Bettina": {
+        "damage": 14,
+        "hsm": 2,
+        "projectiles": 1,
+        "color": "text-fuchsia-200",
+        "purpose": "Weapon - 14 base damage, 2x headshot multiplier, 1 projectile"
+      },
+      "Bobcat": {
+        "damage": 6,
+        "hsm": 2,
+        "projectiles": 1,
+        "color": "text-fuchsia-200",
+        "purpose": "Weapon - 6 base damage, 2x headshot multiplier, 1 projectile"
+      },
+      "Burletta": {
+        "damage": 10,
+        "hsm": 2.5,
+        "projectiles": 1,
+        "color": "text-emerald-200",
+        "purpose": "Weapon - 10 base damage, 2.5x headshot multiplier, 1 projectile"
+      },
+      "Ferro": {
+        "damage": 40,
+        "hsm": 2.5,
+        "projectiles": 1,
+        "color": "text-white",
+        "purpose": "Weapon - 40 base damage, 2.5x headshot multiplier, 1 projectile"
+      },
+      "Hairpin": {
+        "damage": 20,
+        "hsm": 2.5,
+        "projectiles": 1,
+        "color": "text-white",
+        "purpose": "Weapon - 20 base damage, 2.5x headshot multiplier, 1 projectile"
+      },
+      "Il Toro": {
+        "damage": 7.5,
+        "hsm": 1,
+        "projectiles": 9,
+        "color": "text-emerald-200",
+        "purpose": "Weapon - 7.5 base damage, 1x headshot multiplier, 9 projectiles"
+      },
+      "Kettle": {
+        "damage": 10,
+        "hsm": 2.5,
+        "projectiles": 1,
+        "color": "text-white",
+        "purpose": "Weapon - 10 base damage, 2.5x headshot multiplier, 1 projectile"
+      },
+      "Osprey": {
+        "damage": 45,
+        "hsm": 2,
+        "projectiles": 1,
+        "color": "text-cyan-200",
+        "purpose": "Weapon - 45 base damage, 2x headshot multiplier, 1 projectile"
+      },
+      "Rattler": {
+        "damage": 9,
+        "hsm": 2,
+        "projectiles": 1,
+        "color": "text-white",
+        "purpose": "Weapon - 9 base damage, 2x headshot multiplier, 1 projectile"
+      },
+      "Renegade": {
+        "damage": 35,
+        "hsm": 2.25,
+        "projectiles": 1,
+        "color": "text-cyan-200",
+        "purpose": "Weapon - 35 base damage, 2.25x headshot multiplier, 1 projectile"
+      },
+      "Stitcher": {
+        "damage": 7,
+        "hsm": 2.5,
+        "projectiles": 1,
+        "color": "text-white",
+        "purpose": "Weapon - 7 base damage, 2.5x headshot multiplier, 1 projectile"
+      },
+      "Tempest": {
+        "damage": 10,
+        "hsm": 1.5,
+        "projectiles": 1,
+        "color": "text-fuchsia-200",
+        "purpose": "Weapon - 10 base damage, 1.5x headshot multiplier, 1 projectile"
+      },
+      "Torrente": {
+        "damage": 8,
+        "hsm": 2,
+        "projectiles": 1,
+        "color": "text-cyan-200",
+        "purpose": "Weapon - 8 base damage, 2x headshot multiplier, 1 projectile"
+      },
+      "Venator": {
+        "damage": 9,
+        "hsm": 2.5,
+        "projectiles": 2,
+        "color": "text-cyan-200",
+        "purpose": "Weapon - 9 base damage, 2.5x headshot multiplier, 2 projectiles"
+      },
+      "Vulcano": {
+        "damage": 5.5,
+        "hsm": 1,
+        "projectiles": 9,
+        "color": "text-fuchsia-200",
+        "purpose": "Weapon - 5.5 base damage, 1x headshot multiplier, 9 projectiles"
+      }
+    },
+    "purpose": "Collection of weapon configurations with damage, headshot multiplier, and projectile count"
+  },
+  "gadgets": {
+    "type": "object",
+    "items": {
+      "Explosive Mine": {
+        "damage": 40,
+        "color": "text-cyan-200",
+        "purpose": "Gadget - 40 explosive damage"
+      },
+      "Heavy Fuze Grenade": {
+        "damage": 80,
+        "color": "text-cyan-200",
+        "purpose": "Gadget - 80 explosive damage"
+      },
+      "Light Impact Grenade": {
+        "damage": 30,
+        "color": "text-white",
+        "purpose": "Gadget - 30 explosive damage"
+      },
+      "Shrapnel Grenade": {
+        "damage": 60,
+        "color": "text-emerald-200",
+        "purpose": "Gadget - 60 explosive damage"
+      },
+      "Snap Blast Grenade": {
+        "damage": 70,
+        "color": "text-emerald-200",
+        "purpose": "Gadget - 70 explosive damage"
+      },
+      "Trigger'Nade": {
+        "damage": 90,
+        "color": "text-cyan-200",
+        "purpose": "Gadget - 90 explosive damage"
+      }
+    },
+    "purpose": "Collection of gadget configurations with explosive damage values"
+  },
+  "deployables": {
+    "type": "object",
+    "items": {
+      "Rocketeer": {
+        "damage": 90,
+        "color": "text-white",
+        "purpose": "AI Deployable - 90 damage per attack"
+      },
+      "Sentinel": {
+        "damage": 80,
+        "color": "text-white",
+        "purpose": "AI Deployable - 80 damage per attack"
+      },
+      "Turret": {
+        "damage": 2.5,
+        "color": "text-white",
+        "purpose": "AI Deployable - 2.5 damage per shot (rapid fire)"
+      }
+    },
+    "purpose": "Collection of AI deployable configurations with damage values"
+  },
+  "damageMultipliers": {
+    "type": "object",
+    "legShot": {
+      "multiplier": 0.75,
+      "label": "Leg Shot",
+      "purpose": "Damage multiplier for leg shots"
+    },
+    "bodyShot": {
+      "multiplier": 1,
+      "label": "Body Shot",
+      "purpose": "Damage multiplier for body shots"
+    },
+    "headShot": {
+      "multiplier": 2.5,
+      "label": "Head Shot",
+      "purpose": "Default damage multiplier for head shots"
+    },
+    "purpose": "Damage multipliers for different hit locations"
+  },
+  "simulation": {
+    "type": "object",
+    "defaultRPM": {
+      "type": "number",
+      "value": 100,
+      "purpose": "Default rounds per minute for automatic weapon simulation"
+    },
+    "minRPM": {
+      "type": "number",
+      "value": 1,
+      "purpose": "Minimum allowed RPM for simulation"
+    },
+    "maxRPM": {
+      "type": "number",
+      "value": 2000,
+      "purpose": "Maximum allowed RPM for simulation"
+    },
+    "maxTriggers": {
+      "type": "number",
+      "value": 10000,
+      "purpose": "Maximum number of trigger pulls in simulation"
+    },
+    "tickRate": {
+      "type": "number",
+      "value": 0.1,
+      "purpose": "Healing tick rate in seconds for over-time healing"
+    },
+    "purpose": "Simulation configuration parameters"
+  },
+  "inputRanges": {
+    "type": "object",
+    "baseDamage": {
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "default": 40,
+      "purpose": "Base damage input range"
+    },
+    "projectileCount": {
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 1,
+      "purpose": "Projectile count input range"
+    },
+    "triggerCount": {
+      "min": 1,
+      "max": 10000,
+      "step": 1,
+      "default": 1,
+      "purpose": "Number of triggers pulled input range"
+    },
+    "headshotMultiplier": {
+      "min": 0,
+      "max": 100,
+      "step": 0.05,
+      "default": 2.5,
+      "purpose": "Custom headshot multiplier input range"
+    },
+    "purpose": "Input field validation ranges"
+  },
+  "stateManagement": {
+    "type": "object",
+    "initialState": {
+      "currentMode": {
+        "type": "string",
+        "value": "heavy",
+        "purpose": "Initial shield preset mode"
+      },
+      "customSavedDurability": {
+        "type": "number",
+        "value": null,
+        "purpose": "Saved durability value for custom shield reset"
+      },
+      "activeSimulation": {
+        "type": "object",
+        "value": null,
+        "purpose": "Reference to active simulation interval"
+      },
+      "actionHistory": {
+        "type": "array",
+        "value": [],
+        "purpose": "Array storing state snapshots for undo/redo"
+      },
+      "historyIndex": {
+        "type": "number",
+        "value": -1,
+        "purpose": "Current position index in action history array"
+      },
+      "purpose": "Initial application state values"
+    },
+    "simulatorInitialState": {
+      "type": "object",
+      "maxShield": {
+        "type": "number",
+        "value": 80,
+        "purpose": "Maximum shield capacity"
+      },
+      "currentShield": {
+        "type": "number",
+        "value": 80,
+        "purpose": "Current shield value"
+      },
+      "dr": {
+        "type": "number",
+        "value": 52.5,
+        "purpose": "Damage reduction percentage"
+      },
+      "maxLife": {
+        "type": "number",
+        "value": 100,
+        "purpose": "Maximum life value"
+      },
+      "currentLife": {
+        "type": "number",
+        "value": 100,
+        "purpose": "Current life value"
+      },
+      "shieldColor": {
+        "type": "string",
+        "value": "bg-pink-600",
+        "purpose": "CSS class for shield bar color"
+      },
+      "shieldName": {
+        "type": "string",
+        "value": "Heavy Shield",
+        "purpose": "Display name of current shield"
+      },
+      "nameColor": {
+        "type": "string",
+        "value": "text-pink-400",
+        "purpose": "CSS class for shield name text color"
+      },
+      "borderColor": {
+        "type": "string",
+        "value": "border-pink-500/30",
+        "purpose": "CSS class for shield panel border color"
+      },
+      "maxDurability": {
+        "type": "number",
+        "value": 80,
+        "purpose": "Maximum shield durability before permanent break"
+      },
+      "currentDurability": {
+        "type": "number",
+        "value": 80,
+        "purpose": "Current shield durability value"
+      },
+      "isPermanentlyBroken": {
+        "type": "boolean",
+        "value": false,
+        "purpose": "Flag indicating if shield is permanently broken"
+      },
+      "bulletsFired": {
+        "type": "number",
+        "value": 0,
+        "purpose": "Total count of bullets fired"
+      },
+      "damageMitigated": {
+        "type": "number",
+        "value": 0,
+        "purpose": "Total damage mitigated by shield"
+      },
+      "totalDamageTaken": {
+        "type": "number",
+        "value": 0,
+        "purpose": "Total actual damage taken by player"
+      },
+      "shieldRepaired": {
+        "type": "number",
+        "value": 0,
+        "purpose": "Total shield points repaired"
+      },
+      "lifeHealed": {
+        "type": "number",
+        "value": 0,
+        "purpose": "Total life points healed"
+      },
+      "activeIntervals": {
+        "type": "array",
+        "value": [],
+        "purpose": "Array of active healing interval IDs"
+      },
+      "shieldInterval": {
+        "type": "object",
+        "value": null,
+        "purpose": "Reference to active shield healing interval"
+      },
+      "lifeInterval": {
+        "type": "object",
+        "value": null,
+        "purpose": "Reference to active life healing interval"
+      },
+      "purpose": "Initial ShieldSimulator instance state values"
+    },
+    "stateSnapshotStructure": {
+      "type": "object",
+      "properties": {
+        "currentShield": "Current shield value",
+        "currentLife": "Current life value",
+        "currentDurability": "Current durability value",
+        "isPermanentlyBroken": "Permanent break status flag",
+        "bulletsFired": "Total bullets fired count",
+        "damageMitigated": "Total damage mitigated",
+        "totalDamageTaken": "Total actual damage taken",
+        "shieldRepaired": "Total shield repaired",
+        "lifeHealed": "Total life healed",
+        "logHTML": "HTML content of action log"
+      },
+      "purpose": "Structure of state snapshots saved to history"
+    }
+  },
+  "damageResultStructure": {
+    "type": "object",
+    "properties": {
+      "shieldLost": "Amount of shield lost from damage",
+      "lifeLost": "Amount of life lost from damage",
+      "broken": "Whether shield was broken by this damage",
+      "defeated": "Whether player was defeated by this damage"
+    },
+    "purpose": "Structure returned by damage calculation functions"
+  },
+  "logTypes": {
+    "type": "object",
+    "types": [
+      "info",
+      "success",
+      "error",
+      "shield-break",
+      "perm-break",
+      "shield-repair",
+      "defeated",
+      "attack",
+      "heal"
+    ],
+    "purpose": "Valid log entry types for action logging"
+  },
+  "metadata": {
+    "applicationName": "ARC Raiders Damage Calculator",
+    "version": "1.0",
+    "lastUpdated": "06 December 2025",
+    "author": "Eroktic",
+    "purpose": "Complete data structure for mockup API - contains all constants, presets, weapons, healing items, and state management data needed to run the ARC Raiders Damage Calculator application"
+  }
+}
