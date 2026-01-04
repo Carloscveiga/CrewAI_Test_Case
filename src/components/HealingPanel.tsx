@@ -95,7 +95,7 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
           <i className="fas fa-shield-halved text-cyan-300"></i>
           Shield Healing
         </label>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <select
             value={selectedShieldItem}
             onChange={(e) => setSelectedShieldItem(e.target.value)}
@@ -125,7 +125,7 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
           <i className="fas fa-heart text-red-300"></i>
           Life Healing
         </label>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <select
             value={selectedLifeItem}
             onChange={(e) => setSelectedLifeItem(e.target.value)}
