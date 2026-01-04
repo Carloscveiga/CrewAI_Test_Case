@@ -193,7 +193,7 @@ export function ApplyDamagePanel({ combatItems, damageMultipliers, inputRanges, 
       )}
 
       {/* Damage inputs */}
-      <div className="grid grid-cols-3 gap-4 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <div>
           <label className="block text-sm text-slate-200 font-medium mb-2">Base Damage</label>
           <input
