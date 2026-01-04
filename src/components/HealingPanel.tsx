@@ -1,5 +1,5 @@
 // src/components/HealingPanel.tsx
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { HealingItems } from '../types';
 
 interface HealingPanelProps {
@@ -14,6 +14,11 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
   const [selectedShieldItem, setSelectedShieldItem] = useState('Arc Powercell');
   const [selectedLifeItem, setSelectedLifeItem] = useState('Bandage');
   const [simulateHealing, setSimulateHealing] = useState(false);
+  const [isShieldDropdownOpen, setIsShieldDropdownOpen] = useState(false);
+  const [isLifeDropdownOpen, setIsLifeDropdownOpen] = useState(false);
+
+  const shieldDropdownRef = useRef<HTMLDivElement>(null);
+  const lifeDropdownRef = useRef<HTMLDivElement>(null);
 
   const shieldItems = Object.entries(healingItems.shield.items);
   const lifeItems = Object.entries(healingItems.life.items);
@@ -23,6 +28,21 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
 
   const isShieldBroken = state.isPermanentlyBroken;
   const isDefeated = state.currentLife <= 0;
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (shieldDropdownRef.current && !shieldDropdownRef.current.contains(event.target as Node)) {
+        setIsShieldDropdownOpen(false);
+      }
+      if (lifeDropdownRef.current && !lifeDropdownRef.current.contains(event.target as Node)) {
+        setIsLifeDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const applyShieldHeal = () => {
     if (isShieldBroken || isDefeated) return;
@@ -90,63 +110,139 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
       </div>
 
       {/* Shield healing */}
-      <div className="mb-6">
+      <div className="mb-6" ref={shieldDropdownRef}>
         <label className="block text-sm text-slate-200 font-medium mb-3 flex items-center gap-2">
           <i className="fas fa-shield-halved text-cyan-300"></i>
           Shield Healing
         </label>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <select
-            value={selectedShieldItem}
-            onChange={(e) => setSelectedShieldItem(e.target.value)}
-            disabled={isShieldBroken}
-            className={`flex-1 min-w-0 px-4 py-3 bg-gray-900 border ${isShieldBroken ? 'border-gray-700 opacity-50' : 'border-gray-600 hover:border-cyan-500/50'} rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all disabled:cursor-not-allowed appearance-none cursor-pointer`}
-          >
+
+        {/* Custom Dropdown Button */}
+        <button
+          onClick={() => !isShieldBroken && !isDefeated && setIsShieldDropdownOpen(!isShieldDropdownOpen)}
+          className={`w-full px-4 py-3 bg-gradient-to-r from-gray-900 to-gray-800 border hover:border-cyan-500/50 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all appearance-none cursor-pointer flex items-center justify-between group ${
+            isShieldBroken || isDefeated ? 'border-gray-700 opacity-50 cursor-not-allowed' : 'border-gray-600'
+          }`}
+          disabled={isShieldBroken || isDefeated}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center">
+              <i className="fas fa-shield-halved text-cyan-400 text-sm"></i>
+            </div>
+            <div className="text-left flex-1 min-w-0">
+              <div className="font-semibold text-white truncate">{selectedShieldItem}</div>
+              <div className="text-xs text-slate-400 truncate">
+                {selectedShield.amount} Capacity {selectedShield.duration > 0 ? `over ${selectedShield.duration}s` : 'Instant'}
+              </div>
+            </div>
+          </div>
+          <i className={`fas fa-chevron-down transition-transform duration-200 ${isShieldDropdownOpen ? 'rotate-180' : ''}`}></i>
+        </button>
+
+        {/* Custom Dropdown Menu */}
+        {isShieldDropdownOpen && (
+          <div className="mt-2 bg-gray-900/95 backdrop-blur-xl border border-gray-700 rounded-lg shadow-2xl shadow-black/50 overflow-hidden z-50 max-h-64 overflow-y-auto custom-scrollbar">
             {shieldItems.map(([name, item]) => (
-              <option key={name} value={name}>
-                {name} - {item.amount} Capacity {item.duration > 0 ? `over ${item.duration}s` : 'Instant'}
-              </option>
+              <button
+                key={name}
+                onClick={() => {
+                  setSelectedShieldItem(name);
+                  setIsShieldDropdownOpen(false);
+                  applyShieldHeal();
+                }}
+                className={`w-full px-4 py-3 flex items-center gap-3 transition-all duration-150 border-l-2 ${
+                  selectedShieldItem === name
+                    ? 'bg-cyan-500/10 border-cyan-500'
+                    : 'bg-transparent border-transparent hover:bg-gray-800 hover:border-gray-600'
+                }`}
+              >
+                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center flex-shrink-0">
+                  <i className="fas fa-shield-halved text-cyan-400 text-sm"></i>
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <div className={`font-medium truncate ${selectedShieldItem === name ? 'text-cyan-400' : 'text-slate-200'}`}>
+                    {name}
+                  </div>
+                  <div className="text-xs text-slate-500 flex items-center gap-2">
+                    <span>{item.amount} Capacity</span>
+                    {item.duration > 0 && <span className="text-amber-400">• {item.duration}s</span>}
+                    {item.duration === 0 && <span className="text-emerald-400">• Instant</span>}
+                  </div>
+                </div>
+                {selectedShieldItem === name && (
+                  <i className="fas fa-check text-cyan-400 flex-shrink-0"></i>
+                )}
+              </button>
             ))}
-          </select>
-          <button
-            onClick={applyShieldHeal}
-            disabled={isShieldBroken || isDefeated}
-            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-all duration-200 shadow-lg shadow-emerald-600/20 hover:shadow-xl hover:shadow-emerald-700/30 flex items-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <i className="fas fa-shield-halved"></i>
-            Apply
-          </button>
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Life healing */}
-      <div>
+      <div ref={lifeDropdownRef}>
         <label className="block text-sm text-slate-200 font-medium mb-3 flex items-center gap-2">
           <i className="fas fa-heart text-red-300"></i>
           Life Healing
         </label>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <select
-            value={selectedLifeItem}
-            onChange={(e) => setSelectedLifeItem(e.target.value)}
-            disabled={isDefeated}
-            className={`flex-1 min-w-0 px-4 py-3 bg-gray-900 border ${isDefeated ? 'border-gray-700 opacity-50' : 'border-gray-600 hover:border-cyan-500/50'} rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all disabled:cursor-not-allowed appearance-none cursor-pointer`}
-          >
+
+        {/* Custom Dropdown Button */}
+        <button
+          onClick={() => !isDefeated && setIsLifeDropdownOpen(!isLifeDropdownOpen)}
+          className={`w-full px-4 py-3 bg-gradient-to-r from-gray-900 to-gray-800 border hover:border-cyan-500/50 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all appearance-none cursor-pointer flex items-center justify-between group ${
+            isDefeated ? 'border-gray-700 opacity-50 cursor-not-allowed' : 'border-gray-600'
+          }`}
+          disabled={isDefeated}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+              <i className="fas fa-heart text-red-400 text-sm"></i>
+            </div>
+            <div className="text-left flex-1 min-w-0">
+              <div className="font-semibold text-white truncate">{selectedLifeItem}</div>
+              <div className="text-xs text-slate-400 truncate">
+                {selectedLife.amount} HP {selectedLife.duration > 0 ? `over ${selectedLife.duration}s` : 'Instant'}
+              </div>
+            </div>
+          </div>
+          <i className={`fas fa-chevron-down transition-transform duration-200 ${isLifeDropdownOpen ? 'rotate-180' : ''}`}></i>
+        </button>
+
+        {/* Custom Dropdown Menu */}
+        {isLifeDropdownOpen && (
+          <div className="mt-2 bg-gray-900/95 backdrop-blur-xl border border-gray-700 rounded-lg shadow-2xl shadow-black/50 overflow-hidden z-50 max-h-64 overflow-y-auto custom-scrollbar">
             {lifeItems.map(([name, item]) => (
-              <option key={name} value={name}>
-                {name} - {item.amount} HP {item.duration > 0 ? `over ${item.duration}s` : 'Instant'}
-              </option>
+              <button
+                key={name}
+                onClick={() => {
+                  setSelectedLifeItem(name);
+                  setIsLifeDropdownOpen(false);
+                  applyLifeHeal();
+                }}
+                className={`w-full px-4 py-3 flex items-center gap-3 transition-all duration-150 border-l-2 ${
+                  selectedLifeItem === name
+                    ? 'bg-red-500/10 border-red-500'
+                    : 'bg-transparent border-transparent hover:bg-gray-800 hover:border-gray-600'
+                }`}
+              >
+                <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center flex-shrink-0">
+                  <i className="fas fa-heart text-red-400 text-sm"></i>
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <div className={`font-medium truncate ${selectedLifeItem === name ? 'text-red-400' : 'text-slate-200'}`}>
+                    {name}
+                  </div>
+                  <div className="text-xs text-slate-500 flex items-center gap-2">
+                    <span>{item.amount} HP</span>
+                    {item.duration > 0 && <span className="text-amber-400">• {item.duration}s</span>}
+                    {item.duration === 0 && <span className="text-emerald-400">• Instant</span>}
+                  </div>
+                </div>
+                {selectedLifeItem === name && (
+                  <i className="fas fa-check text-red-400 flex-shrink-0"></i>
+                )}
+              </button>
             ))}
-          </select>
-          <button
-            onClick={applyLifeHeal}
-            disabled={isDefeated}
-            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-all duration-200 shadow-lg shadow-emerald-600/20 hover:shadow-xl hover:shadow-emerald-700/30 flex items-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <i className="fas fa-plus"></i>
-            Apply
-          </button>
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
