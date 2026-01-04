@@ -243,7 +243,7 @@ export function ApplyDamagePanel({ combatItems, damageMultipliers, inputRanges, 
       </div>
 
       {/* Shot buttons */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <button
           onClick={() => handleShot(damageMultipliers?.legShot?.multiplier || 0.75, damageMultipliers?.legShot?.label || 'Leg Shot')}
           disabled={isDefeated}
