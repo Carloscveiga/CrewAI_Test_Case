@@ -1,5 +1,4 @@
 // src/components/StatsGrid.tsx
-import React from 'react';
 
 interface StatsGridProps {
   state: any;

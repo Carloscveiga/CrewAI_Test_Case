@@ -1,18 +1,16 @@
 // src/components/ShieldStatusPanel.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ProgressBar } from './ProgressBar';
-import type { ShieldPreset } from '../types';
 
 interface ShieldStatusPanelProps {
   state: any;
   currentMode: string;
   onPresetChange: (mode: string) => void;
   onUpdateCustomSettings: (settings: any) => void;
-  shieldPresets: Record<string, ShieldPreset>;
   inputRanges: any;
 }
 
-export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdateCustomSettings, shieldPresets, inputRanges }: ShieldStatusPanelProps) {
+export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdateCustomSettings, inputRanges }: ShieldStatusPanelProps) {
   const [customSettings, setCustomSettings] = useState({
     charges: 80,
     dr: 50,

@@ -1,5 +1,5 @@
 // src/components/ApplyDamagePanel.tsx
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { CombatItemWithCategory } from '../types';
 
 interface ApplyDamagePanelProps {
@@ -98,7 +98,7 @@ export function ApplyDamagePanel({ combatItems, damageMultipliers, inputRanges, 
               <div className="text-xs text-slate-400">
                 {selectedWeaponItem?.item.damage} DMG
                 {selectedWeaponItem?.item.hsm && `, ${selectedWeaponItem.item.hsm}x HSM`}
-                {selectedWeaponItem?.item.projectiles > 1 && `, ${selectedWeaponItem.item.projectiles} Proj`}
+                {selectedWeaponItem?.item.projectiles && selectedWeaponItem.item.projectiles > 1 && `, ${selectedWeaponItem.item.projectiles} Proj`}
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ export function ApplyDamagePanel({ combatItems, damageMultipliers, inputRanges, 
                       <div className="text-xs text-slate-500 flex items-center gap-2">
                         <span>{item.item.damage} DMG</span>
                         {item.item.hsm && <span className="text-amber-400">• {item.item.hsm}x HSM</span>}
-                        {item.item.projectiles > 1 && <span className="text-purple-400">• {item.item.projectiles} Proj</span>}
+                        {item.item.projectiles && item.item.projectiles > 1 && <span className="text-purple-400">• {item.item.projectiles} Proj</span>}
                       </div>
                     </div>
                     {selectedWeapon === item.name && (

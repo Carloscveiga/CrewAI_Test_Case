@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppData } from './hooks/useAppData';
 import { useShieldSimulator } from './hooks/useShieldSimulator';
 import { Header } from './components/Header';
@@ -13,9 +13,6 @@ import type { CombatItemWithCategory } from './types';
 function App() {
   const { data, loading, error } = useAppData();
   const [currentMode, setCurrentMode] = useState('heavy');
-  const [customSavedSettings, setCustomSavedSettings] = useState(null);
-  const [showCustomSettings, setShowCustomSettings] = useState(false);
-  const [damageInputs, setDamageInputs] = useState({ baseDamage: 40, projectiles: 1, triggers: 1 });
 
   const simulator = useShieldSimulator(
     data?.shieldPresets?.heavy || {
@@ -43,8 +40,6 @@ function App() {
       if (preset) {
         simulator.applyPreset(preset);
       }
-    } else {
-      setShowCustomSettings(true);
     }
   };
 
@@ -152,7 +147,6 @@ function App() {
               currentMode={currentMode}
               onPresetChange={handlePresetChange}
               onUpdateCustomSettings={handleUpdateCustomSettings}
-              shieldPresets={data.shieldPresets}
               inputRanges={data.inputRanges}
             />
             <StatsGrid state={simulator.state} ehp={ehp} />

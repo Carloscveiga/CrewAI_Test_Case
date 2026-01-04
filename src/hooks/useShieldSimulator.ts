@@ -1,6 +1,6 @@
 // src/hooks/useShieldSimulator.ts
 import { useState, useCallback, useRef, useEffect } from 'react';
-import type { SimulatorState, DamageResult, StateSnapshot, LogEntry, LogType, ShieldPreset } from '../types';
+import type { SimulatorState, StateSnapshot, LogEntry, LogType, ShieldPreset } from '../types';
 
 export function useShieldSimulator(initialPreset: ShieldPreset, maxHistory: number = 50) {
   const [state, setState] = useState<SimulatorState>({

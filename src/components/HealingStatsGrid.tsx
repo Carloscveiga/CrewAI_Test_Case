@@ -1,5 +1,4 @@
 // src/components/HealingStatsGrid.tsx
-import React from 'react';
 
 interface HealingStatsGridProps {
   state: any;

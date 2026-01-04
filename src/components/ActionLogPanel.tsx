@@ -1,5 +1,4 @@
 // src/components/ActionLogPanel.tsx
-import React from 'react';
 import type { LogEntry } from '../types';
 
 interface ActionLogPanelProps {
