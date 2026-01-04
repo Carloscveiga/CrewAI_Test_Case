@@ -138,12 +138,12 @@ export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdate
       </div>
 
       {/* Preset buttons */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-4">
         {presets.map((preset) => (
           <button
             key={preset.key}
             onClick={() => onPresetChange(preset.key)}
-            className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 border ${
+            className={`flex-1 min-w-[100px] py-2.5 px-3 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 border ${
               currentMode === preset.key
                 ? `${preset.activeClass} scale-105`
                 : `${preset.inactiveClass} hover:scale-102`
