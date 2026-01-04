@@ -219,7 +219,7 @@ export function ApplyDamagePanel({ combatItems, damageMultipliers, inputRanges, 
           />
         </div>
         <div>
-          <label className="block text-sm text-slate-200 font-medium mb-2">Triggers Pulled</label>
+          <label className="block text-sm text-slate-200 font-medium mb-2">Trigger Pulls</label>
           <input
             type="number"
             value={triggers}
