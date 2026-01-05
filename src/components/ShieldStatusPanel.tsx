@@ -94,8 +94,8 @@ export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdate
   return (
     <div className={`holo-glass tech-border rounded-lg p-6 transition-all duration-300 ${state.borderColor}`}>
       {/* Header Section */}
-      <div className="flex items-start justify-between mb-6">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
           {/* Shield Icon with Pulse Effect */}
           <div className="relative">
             <div className={`w-16 h-16 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${
@@ -126,7 +126,7 @@ export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdate
 
           {/* Shield Info */}
           <div>
-            <h2 className={`text-2xl font-black uppercase tracking-wider ${state.nameColor} flex items-center gap-3`}>
+            <h2 className={`text-xl sm:text-2xl font-black uppercase tracking-wider ${state.nameColor} flex items-center gap-2 sm:gap-3`}>
               {state.shieldName}
               <span className={`px-2 py-0.5 rounded text-xs font-mono ${
                 state.isPermanentlyBroken
@@ -136,7 +136,7 @@ export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdate
                 {state.isPermanentlyBroken ? 'OFFLINE' : 'ACTIVE'}
               </span>
             </h2>
-            <div className="flex items-center gap-4 mt-2 font-mono text-sm">
+            <div className="flex items-center gap-2 sm:gap-4 mt-2 font-mono text-xs sm:text-sm flex-wrap">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
                 <span className="text-slate-400">SHIELD:</span>
@@ -156,7 +156,7 @@ export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdate
         </div>
 
         {/* Damage Reduction Badge */}
-        <div className={`px-4 py-2 rounded-lg border font-mono text-sm transition-all duration-200 ${
+        <div className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg border font-mono text-xs sm:text-sm transition-all duration-200 ${
           state.isPermanentlyBroken
             ? 'bg-red-500/10 border-red-500/50 text-red-400'
             : 'bg-cyan-500/10 border-cyan-500/50 text-cyan-400'
@@ -227,7 +227,7 @@ export function ShieldStatusPanel({ state, currentMode, onPresetChange, onUpdate
       </div>
 
       {/* Preset Buttons - Technical Button Grid */}
-      <div className="grid grid-cols-5 gap-2 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mb-4">
         {presets.map((preset) => (
           <button
             key={preset.key}
