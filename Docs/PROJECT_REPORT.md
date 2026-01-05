@@ -13,8 +13,6 @@ This project is an **AI-powered web application migration system** built with **
 **Current Phase**: React Implementation
 **Last Updated**: January 5, 2026
 
-# You can find all crewAI output documentatin in Docs folder including an expert overview of the project.
-
 ---
 
 ## Table of Contents
