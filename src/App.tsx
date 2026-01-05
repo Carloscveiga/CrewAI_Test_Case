@@ -82,10 +82,10 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#15141F] text-white flex items-center justify-center">
-        <div className="text-center">
-          <i className="fas fa-spinner fa-spin text-4xl mb-4 text-blue-400"></i>
-          <p className="text-lg">Loading...</p>
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center scanlines grid-pattern">
+        <div className="text-center relative z-10">
+          <div className="loading-spinner mx-auto mb-6"></div>
+          <p className="text-lg font-['Orbitron'] uppercase tracking-widest text-cyan-400">Initializing Systems</p>
         </div>
       </div>
     );
@@ -93,96 +93,117 @@ function App() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-[#15141F] text-white flex items-center justify-center">
-        <div className="text-center">
-          <i className="fas fa-exclamation-triangle text-4xl mb-4 text-red-400"></i>
-          <p className="text-lg">Error: {error}</p>
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center scanlines grid-pattern">
+        <div className="text-center relative z-10 holo-glass p-8 rounded-lg">
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-red-500/10 flex items-center justify-center border-2 border-red-500">
+            <svg className="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <p className="text-lg font-['Orbitron'] uppercase tracking-widest text-red-400 mb-2">System Error</p>
+          <p className="text-sm text-slate-400 font-mono">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Animated gradient mesh background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
+    <div className="min-h-screen relative overflow-hidden bg-[#0a0a0f]">
+      {/* Ambient Background Effects */}
+      <div className="fixed inset-0 scanlines"></div>
+      <div className="fixed inset-0 grid-pattern"></div>
 
-      {/* Animated gradient overlays */}
-      <div className="fixed inset-0 opacity-40">
-        <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/20 via-transparent to-blue-900/20 animate-pulse" style={{ animationDuration: '8s' }}></div>
-        <div className="absolute inset-0 bg-gradient-to-bl from-blue-900/20 via-transparent to-cyan-900/20 animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }}></div>
-      </div>
-
-      {/* Floating animated orbs */}
+      {/* Animated Gradient Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Large purple orb - top right */}
-        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-gradient-to-br from-purple-600/30 to-violet-900/20 rounded-full blur-3xl animate-float" style={{ animationDuration: '20s' }}></div>
+        {/* Cyan orb - top right */}
+        <div
+          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            animation: 'float 25s ease-in-out infinite',
+          }}
+        ></div>
 
-        {/* Medium blue orb - bottom left */}
-        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-gradient-to-tr from-blue-600/25 to-cyan-900/15 rounded-full blur-3xl animate-float" style={{ animationDuration: '25s', animationDelay: '5s' }}></div>
+        {/* Purple orb - bottom left */}
+        <div
+          className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            animation: 'float 30s ease-in-out infinite',
+            animationDelay: '5s',
+          }}
+        ></div>
 
-        {/* Small pink orb - top left */}
-        <div className="absolute top-20 -left-20 w-[300px] h-[300px] bg-gradient-to-br from-pink-600/20 to-rose-900/10 rounded-full blur-3xl animate-float" style={{ animationDuration: '18s', animationDelay: '3s' }}></div>
-
-        {/* Medium cyan orb - bottom right */}
-        <div className="absolute -bottom-20 -right-20 w-[350px] h-[350px] bg-gradient-to-tl from-cyan-600/20 to-blue-900/10 rounded-full blur-3xl animate-float" style={{ animationDuration: '22s', animationDelay: '7s' }}></div>
-
-        {/* Center ambient glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-blue-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }}></div>
+        {/* Amber orb - center */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-10"
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.08) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            animation: 'pulse-glow 4s ease-in-out infinite',
+          }}
+        ></div>
       </div>
 
-      {/* Subtle grid pattern overlay */}
-      <div className="fixed inset-0 opacity-[0.02]" style={{
-        backgroundImage: 'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
-        backgroundSize: '50px 50px'
-      }}></div>
-
+      {/* Main Content */}
       <div className="relative z-10">
         <Header />
-        <main className="max-w-7xl mx-auto p-4 sm:p-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6 min-w-0">
-            <ShieldStatusPanel
-              state={simulator.state}
-              currentMode={currentMode}
-              onPresetChange={handlePresetChange}
-              onUpdateCustomSettings={handleUpdateCustomSettings}
-              inputRanges={data.inputRanges}
-            />
-            <StatsGrid state={simulator.state} ehp={ehp} />
-            <ApplyDamagePanel
-              combatItems={getAllCombatItems()}
-              damageMultipliers={data.damageMultipliers}
-              inputRanges={data.inputRanges}
-              onApplyDamage={handleApplyDamage}
-              isHitFatal={simulator.isHitFatal}
-              state={simulator.state}
-            />
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            {/* Left Column - Shield Status & Stats (8 cols) */}
+            <div className="lg:col-span-8 space-y-6">
+              <ShieldStatusPanel
+                state={simulator.state}
+                currentMode={currentMode}
+                onPresetChange={handlePresetChange}
+                onUpdateCustomSettings={handleUpdateCustomSettings}
+                inputRanges={data.inputRanges}
+              />
+              <StatsGrid state={simulator.state} ehp={ehp} />
+              <ApplyDamagePanel
+                combatItems={getAllCombatItems()}
+                damageMultipliers={data.damageMultipliers}
+                inputRanges={data.inputRanges}
+                onApplyDamage={handleApplyDamage}
+                isHitFatal={simulator.isHitFatal}
+                state={simulator.state}
+              />
+            </div>
+
+            {/* Right Column - Action Log & Healing (4 cols) */}
+            <div className="lg:col-span-4 space-y-6">
+              <ActionLogPanel
+                logs={simulator.logs}
+                canUndo={simulator.canUndo}
+                canRedo={simulator.canRedo}
+                onCopyLog={handleCopyLog}
+                onUndo={handleUndo}
+                onRedo={handleRedo}
+                onClearLogs={handleClearLogs}
+              />
+              <HealingStatsGrid state={simulator.state} />
+              <HealingPanel
+                healingItems={data.healingItems}
+                onHealInstant={handleApplyHeal}
+                onStartOverTimeHeal={handleStartOverTimeHeal}
+                onClearActiveHeals={handleClearActiveHeals}
+                state={simulator.state}
+              />
+            </div>
           </div>
-          <div className="space-y-6 min-w-0 overflow-hidden">
-            <ActionLogPanel
-              logs={simulator.logs}
-              canUndo={simulator.canUndo}
-              canRedo={simulator.canRedo}
-              onCopyLog={handleCopyLog}
-              onUndo={handleUndo}
-              onRedo={handleRedo}
-              onClearLogs={handleClearLogs}
-            />
-            <HealingStatsGrid state={simulator.state} />
-            <HealingPanel
-              healingItems={data.healingItems}
-              onHealInstant={handleApplyHeal}
-              onStartOverTimeHeal={handleStartOverTimeHeal}
-              onClearActiveHeals={handleClearActiveHeals}
-              state={simulator.state}
-            />
+        </main>
+
+        {/* Footer */}
+        <footer className="mt-12 text-center pb-8">
+          <div className="holo-glass inline-block px-6 py-3 rounded-lg tech-border">
+            <p className="text-xs text-slate-400 font-mono">
+              <span className="text-cyan-400">SYS.VER</span> 2.0.0 | <span className="text-cyan-400">LAST.UPD</span> {data.metadata.lastUpdated}
+            </p>
           </div>
-        </div>
-      </main>
-      <footer className="mt-8 text-center text-xs text-slate-400 pb-4">
-        Last Updated: {data.metadata.lastUpdated}
-      </footer>
+        </footer>
       </div>
     </div>
   );

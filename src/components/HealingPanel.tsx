@@ -62,6 +62,16 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
     }
   };
 
+  const handleShieldSelection = (name: string) => {
+    setSelectedShieldItem(name);
+    setIsShieldDropdownOpen(false);
+  };
+
+  const handleLifeSelection = (name: string) => {
+    setSelectedLifeItem(name);
+    setIsLifeDropdownOpen(false);
+  };
+
   return (
     <div className={`glass rounded-2xl p-6 shadow-2xl shadow-black/20 border border-border/50 transition-all duration-300 ${isDefeated ? 'opacity-50 pointer-events-none' : ''}`}>
       <div className="flex items-center justify-between mb-6">
@@ -144,11 +154,7 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
             {shieldItems.map(([name, item]) => (
               <button
                 key={name}
-                onClick={() => {
-                  setSelectedShieldItem(name);
-                  setIsShieldDropdownOpen(false);
-                  applyShieldHeal();
-                }}
+                onClick={() => handleShieldSelection(name)}
                 className={`w-full px-4 py-3 flex items-center gap-3 transition-all duration-150 border-l-2 ${
                   selectedShieldItem === name
                     ? 'bg-cyan-500/10 border-cyan-500'
@@ -175,6 +181,20 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
             ))}
           </div>
         )}
+
+        {/* Apply Shield Heal Button */}
+        <button
+          onClick={applyShieldHeal}
+          disabled={isShieldBroken || isDefeated}
+          className={`mt-3 w-full px-4 py-3 rounded-lg text-white text-sm font-medium transition-all duration-200 shadow-lg flex items-center justify-center gap-2 ${
+            isShieldBroken || isDefeated
+              ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+              : 'bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 shadow-cyan-600/20 hover:shadow-xl hover:shadow-cyan-500/30'
+          }`}
+        >
+          <i className="fas fa-plus"></i>
+          Apply Shield Regen
+        </button>
       </div>
 
       {/* Life healing */}
@@ -212,11 +232,7 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
             {lifeItems.map(([name, item]) => (
               <button
                 key={name}
-                onClick={() => {
-                  setSelectedLifeItem(name);
-                  setIsLifeDropdownOpen(false);
-                  applyLifeHeal();
-                }}
+                onClick={() => handleLifeSelection(name)}
                 className={`w-full px-4 py-3 flex items-center gap-3 transition-all duration-150 border-l-2 ${
                   selectedLifeItem === name
                     ? 'bg-red-500/10 border-red-500'
@@ -243,6 +259,20 @@ export function HealingPanel({ healingItems, onHealInstant, onStartOverTimeHeal,
             ))}
           </div>
         )}
+
+        {/* Apply Life Heal Button */}
+        <button
+          onClick={applyLifeHeal}
+          disabled={isDefeated}
+          className={`mt-3 w-full px-4 py-3 rounded-lg text-white text-sm font-medium transition-all duration-200 shadow-lg flex items-center justify-center gap-2 ${
+            isDefeated
+              ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+              : 'bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-emerald-600/20 hover:shadow-xl hover:shadow-emerald-500/30'
+          }`}
+        >
+          <i className="fas fa-plus"></i>
+          Apply Life Heal
+        </button>
       </div>
     </div>
   );
